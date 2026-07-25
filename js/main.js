@@ -1,47 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const lightbox = document.getElementById("lightbox");
-  const lightboxImg = document.getElementById("lightbox-img");
-  const lightboxCaption = document.getElementById("lightbox-caption");
-  const closeBtn = document.getElementById("lightbox-close");
-  const galleryItems = document.querySelectorAll(".gallery-item");
+  document.querySelectorAll(".carousel").forEach((carousel) => {
+    const track = carousel.querySelector(".carousel-track");
+    const prevBtn = carousel.querySelector(".carousel-arrow--prev");
+    const nextBtn = carousel.querySelector(".carousel-arrow--next");
+    const firstSlide = track.querySelector(".carousel-slide");
 
-  function openLightbox(src, alt, caption) {
-    lightboxImg.src = src;
-    lightboxImg.alt = alt;
-    if (caption) {
-      lightboxCaption.textContent = caption;
-      lightboxCaption.hidden = false;
-    } else {
-      lightboxCaption.textContent = "";
-      lightboxCaption.hidden = true;
+    function slideStep() {
+      const trackGap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      return firstSlide.getBoundingClientRect().width + trackGap;
     }
-    lightbox.hidden = false;
-  }
 
-  function closeLightbox() {
-    lightbox.hidden = true;
-    lightboxImg.src = "";
-    lightboxCaption.textContent = "";
-  }
-
-  galleryItems.forEach((item) => {
-    item.addEventListener("click", () => {
-      const full = item.getAttribute("data-full");
-      const alt = item.querySelector("img").alt;
-      const caption = item.getAttribute("data-caption") || "";
-      openLightbox(full, alt, caption);
+    prevBtn.addEventListener("click", () => {
+      track.scrollBy({ left: -slideStep(), behavior: "smooth" });
     });
-  });
 
-  closeBtn.addEventListener("click", closeLightbox);
-
-  lightbox.addEventListener("click", (event) => {
-    if (event.target === lightbox || event.target.classList.contains("lightbox-content")) {
-      closeLightbox();
-    }
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !lightbox.hidden) closeLightbox();
+    nextBtn.addEventListener("click", () => {
+      track.scrollBy({ left: slideStep(), behavior: "smooth" });
+    });
   });
 });
