@@ -125,25 +125,18 @@ h1 {
   align-items: start;
 }
 
-.embed-card {
-  display: flex;
-  justify-content: center;
+.post-card {
+  display: block;
 }
 
-.embed-card iframe {
-  max-width: 100%;
+.post-card img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
-/* Instagram embeds refuse to go under 326px wide, so scale them down instead */
-.posts-grid .embed-card {
-  zoom: 0.7;
-  overflow: hidden;
-  border-top: 1px solid var(--border);
-}
-
-/* Slides Instagram's header out of view: its "View profile" button overlaps long account names */
-.posts-grid .instagram-media {
-  margin-top: -58px !important;
+.post-card:hover img {
+  opacity: 0.85;
 }
 
 .reporting-grid {
